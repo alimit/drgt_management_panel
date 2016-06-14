@@ -1,0 +1,148 @@
+<!-- list -->
+<ul class="nav">
+	<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+		<span translate="aside.nav.HEADER">Navigation</span>
+	</li>
+	<li ui-sref-active="active">
+		<a ui-sref="app.dashboard">
+			<i class="glyphicon glyphicon-stats icon"></i>
+			<span class="font-bold" translate="aside.nav.DASHBOARD">Dashboard</span>
+		</a>
+	</li>
+	<li ui-sref-active="active">
+		<a href="" ng-click="logout()">
+			<i class="glyphicon glyphicon-off icon"></i>
+			<span class="font-bold" translate="aside.nav.LOGOUT">Log Out</span>
+		</a>
+	</li>
+
+	<li class="line dk"></li>
+
+	<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+		<span translate="aside.nav.components.COMPONENTS">Components</span>
+	</li>
+	<li ui-sref-active="active">
+		<a ui-sref="app.settings">
+			<i class="fa fa-gears icon"></i>
+			<span translate="aside.nav.components.SETTINGS">Settings</span>
+		</a>
+	</li>
+	<li ng-class="{active:$state.includes('app.jackpots')}">
+		<a href class="auto">
+			<span class="pull-right text-muted">
+				<i class="fa fa-fw fa-angle-right text"></i>
+				<i class="fa fa-fw fa-angle-down text-active"></i>
+			</span>
+			<i class="fa fa-university icon"></i>
+			<span translate="aside.nav.components.jackpots.JACKPOTS">Jackpots</span>
+		</a>
+		<ul class="nav nav-sub dk">
+			<li class="nav-sub-header">
+				<a href>
+					<span translate="aside.nav.components.jackpots.JACKPOTS">Jackpots</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.jptriggervars">
+					<span translate="aside.nav.components.jackpots.JPTRIGGERVARS">jptriggervars</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.jptriggerdolocal">
+					<span translate="aside.nav.components.jackpots.JPTRIGGERDOLOCAL">jptriggerdolocal</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.jppretrigger">
+					<span translate="aside.nav.components.jackpots.JPPRETRIGGER">jppretrigger</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.jpmultihit">
+					<span translate="aside.nav.components.jackpots.JPMULTIHIT">jpmultihit</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.jpvalueset">
+					<span translate="aside.nav.components.jackpots.JPVALUESET">jpvalueset</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.jpvalueinc">
+					<span translate="aside.nav.components.jackpots.JPVALUEINC">jpvalueinc</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.jpcampaignstate">
+					<span translate="aside.nav.components.jackpots.JPCAMPAIGNSTATE">jpcampaignstate</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.jackpots.bigwinhit">
+					<span translate="aside.nav.components.jackpots.BIGWINHIT">bigwinhit</span>
+				</a>
+			</li>
+		</ul>
+	</li>
+	<li ng-class="{active:$state.includes('app.sim')}">
+		<a href class="auto">
+			<span class="pull-right text-muted">
+				<i class="fa fa-fw fa-angle-right text"></i>
+				<i class="fa fa-fw fa-angle-down text-active"></i>
+			</span>
+			<i class="fa fa-magic icon"></i>
+			<span translate="aside.nav.components.sim.SIMULATION">Simulation</span>
+		</a>
+		<ul class="nav nav-sub dk">
+			<li class="nav-sub-header">
+				<a href>
+					<span translate="aside.nav.components.sim.SIMULATION">Simulation</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.sim.hitcard">
+					<span translate="aside.nav.components.sim.HITCARD">hitcard</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.sim.startrolldice">
+					<span translate="aside.nav.components.sim.STARTROLLDICE">startrolldice</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.sim.rolldiceresult">
+					<span translate="aside.nav.components.sim.ROLLDICERESULT">rolldiceresult</span>
+				</a>
+			</li>
+		</ul>
+	</li>
+	<li ng-class="{active:$state.includes('app.token')}">
+		<a href class="auto">
+			<span class="pull-right text-muted">
+				<i class="fa fa-fw fa-angle-right text"></i>
+				<i class="fa fa-fw fa-angle-down text-active"></i>
+			</span>
+			<i class="fa  fa-ticket icon"></i>
+			<span translate="aside.nav.components.token.TOKENS">Tokens</span>
+		</a>
+		<ul class="nav nav-sub dk">
+			<li class="nav-sub-header">
+				<a href>
+					<span translate="aside.nav.components.token.TOKENS">Tokens</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.token.dumptoken">
+					<span translate="aside.nav.components.token.DUMPTOKEN">dumptoken</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.token.simsmibtoken">
+					<span translate="aside.nav.components.token.SIMSMIBTOKEN">simsmibtoken</span>
+				</a>
+			</li>
+		</ul>
+	</li>
+
+</ul>
+<!-- / list -->

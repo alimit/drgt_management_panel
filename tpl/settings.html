@@ -1,0 +1,223 @@
+<form class="" ng-controller="SettingsCtrl"  name="settingsFrom">
+	<div class="bg-light lter b-b wrapper-md">
+		<h1 class="m-n font-thin h3">
+			<i class="fa fa-gears icon i-sm m-r-sm"></i>
+			<span >Settings</span>
+			<!--<button type="submit" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right" ng-disabled="settingsFrom.$invalid">Save</button>-->
+		</h1>
+	</div>
+	<alert ng-repeat="alert in alerts" class="fade-in" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+	<div class="wrapper-md">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold">Logs</div>
+					<div class="panel-body">
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">debug, verbose, normal </label>
+								<div class="col-lg-5">
+									<ui-select ng-model="settings.logger" theme="bootstrap" required>
+										<ui-select-match placeholder="Select or search a logger level in the list...">{{$select.selected}}</ui-select-match>
+										<ui-select-choices repeat="loggerOption in settings.loggerOptions | filter: $select.search">
+											<div ng-bind-html="loggerOption | highlight: $select.search"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('logger')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">logjsonas</label>
+								<div class="col-lg-5">
+									<ui-select ng-model="settings.logjsonas" theme="bootstrap" required>
+										<ui-select-match placeholder="Select or search a log option type in the list...">{{$select.selected}}</ui-select-match>
+										<ui-select-choices repeat="logOption in settings.logOptions | filter: $select.search">
+											<div ng-bind-html="logOption | highlight: $select.search"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('logjsonas')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">logsmibas</label>
+								<div class="col-lg-5">
+									<ui-select ng-model="settings.logsmibas" theme="bootstrap" required>
+										<ui-select-match placeholder="Select or search a log option type in the list...">{{$select.selected}}</ui-select-match>
+										<ui-select-choices repeat="logOption in settings.logOptions | filter: $select.search">
+											<div ng-bind-html="logOption | highlight: $select.search"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('logsmibas')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold">Screen settings</div>
+					<div class="panel-body">
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">screento</label>
+								<div class="col-lg-5">
+									<ui-select ng-model="settings.screento" theme="bootstrap" required>
+										<ui-select-match placeholder="Select or search a screen type in the list...">{{$select.selected}}</ui-select-match>
+										<ui-select-choices repeat="screenId in settings.screenIds | filter: $select.search">
+											<div ng-bind-html="screenId | highlight: $select.search"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('screento')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">screenbackfrom</label>
+								<div class="col-lg-5">
+									<ui-select ng-model="settings.screenbackfrom" theme="bootstrap" required>
+										<ui-select-match placeholder="Select or search a screen type in the list...">{{$select.selected}}</ui-select-match>
+										<ui-select-choices repeat="screenId in settings.screenIds | filter: $select.search">
+											<div ng-bind-html="screenId | highlight: $select.search"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('screento')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+						</div>
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">featurebegin</label>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="col-lg-2 control-label">prize</label>
+										<div class="form-group col-lg-7">
+											<input type="text" ng-model="settings.featurebegin.prize" class="form-control" placeholder="insert prize in credits/cents">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-lg-2 control-label">recoverystate</label>
+										<div class="form-group col-lg-7">
+											<ui-select ng-model="settings.featurebegin.recoverystate" theme="bootstrap" required>
+												<ui-select-match placeholder="Select or search a recoverystate in the list...">{{$select.selected}}</ui-select-match>
+												<ui-select-choices repeat="wof in settings.wofOptions | filter: $select.search">
+													<div ng-bind-html="wof | highlight: $select.search"></div>
+												</ui-select-choices>
+											</ui-select>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('featurebegin')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+						</div>
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">featureend</label>
+								<div class="col-lg-5">
+									
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('featureend')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold">System settings</div>
+					<div class="panel-body">
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">setmastervolume</label>
+								<div class="col-lg-5">
+									<input type="text" ng-model="settings.setmastervolume" class="form-control" placeholder="insert volume number">
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('setmastervolume')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+						</div>
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">setactivestream</label>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="col-lg-2 control-label">name</label>
+										<div class="form-group col-lg-7">
+											<input type="text" ng-model="settings.setactivestream.name" class="form-control" placeholder="">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-lg-2 control-label">id</label>
+										<div class="form-group col-lg-7">
+											<input type="text" ng-model="settings.setactivestream.id" class="form-control" placeholder="">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('setactivestream')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+						</div>
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">bboxclearerror</label>
+								<div class="col-lg-5">
+									
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('bboxclearerror')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold">Setup Time</div>
+					<div class="panel-body">
+						<div class="bs-example form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Set Date</label>
+								<div class="col-lg-3">
+									<div class="input-group">
+										<datepicker ng-model="settings.setuptime" class="well well-sm" datepicker-options="options"></datepicker>
+									</div>
+								</div>
+								<div class="col-lg-2">
+									<div class="input-group">
+										<timepicker ng-model="settings.setuptime" ng-change="" hour-step="1" minute-step="1" show-meridian="ismeridian"></timepicker>
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<button type="button" ng-click="submitData('setudptime')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+</form>

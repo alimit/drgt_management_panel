@@ -1,0 +1,12 @@
+[
+	{
+		"name" : "Margus",
+		"email": "margus@alimit.com",
+		"password": "123kala456"
+	},
+	{
+		"name" : "Developer",
+		"email": "developer@alimit.com",
+		"password": "123kala456"
+	}
+]

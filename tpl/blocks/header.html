@@ -1,0 +1,54 @@
+      <!-- navbar header -->
+      <div class="navbar-header bg-primary">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll-to="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="/" class="navbar-brand text-lt">
+          <!--<i class="fa fa-btc"></i>-->
+          <img src="img/logo.png">
+          <!--<span class="hidden-folded m-l-xs">{{app.name}}</span>-->
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse pos-rlt navbar-collapse box-shadow bg-primary">
+
+     
+
+        <!-- nabar right -->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="hidden-xs">
+            <a ng-click="submitData('resendjsonall')">
+				<i class=" icon-reload text"></i>
+				resendjsonall 
+			</a>
+          </li>
+		  </li>
+		   <li class="hidden-xs">
+            <a ng-click="submitData('refresh')">
+				<i class=" icon-refresh text"></i>
+				refresh 
+			</a>
+          </li>
+		   <li class="hidden-xs">
+            <a ng-click="submitData('restartimmediate')">
+				<i class="glyphicon glyphicon-off text"></i>
+				restart 
+			</a>
+          </li>
+          <li class="hidden-xs">
+            <a ui-fullscreen></a>
+          </li>
+		  
+          
+        </ul>
+        <!-- / navbar right -->
+
+      </div>
+      <!-- / navbar collapse -->

@@ -1,0 +1,323 @@
+HoneyBee dependent 
+Any change of this type command requires a HoneyBee software update. 
+
+OK - [edit] resendjsonall 
+this command resends all json messages, for test purposes. need resend when database keys has been altered.
+e.g. wget -q -O- http://localhost:5050/test?msg=resendjsonall
+
+
+OK - [edit] hitcard 
+simulate hit card 
+hitcard<cardid>, see hitCard for encoding of cardid
+
+e.g. wget -q -O- http://localhost:5050/test?msg=hitcard23
+
+
+OK - [edit] startrolldice 
+simulate startRollDice waggledance message 
+e.g. wget -q -O- http://localhost:5050/test?msg=startrolldice
+
+
+OK - [edit] rolldiceresult 
+simulate rollDiceResult waggledance message 
+rolldiceresult<numHits>
+- numHits: the number of infiniti symbols (in case of feature_infiniti)
+
+e.g. wget -q -O- http://localhost:5050/test?msg=rolldiceresult2
+
+
+OK - [edit] jptriggervars 
+jptriggervars[<inventory>_<egminfo1>_<egminfo2>_<jpname>_<prizename>_<sitename>_<gamename>_<manufacturer>_<model>]
+This command sets the trigger vars which are used by "jppretrigger", "jptrigger_" and "bigwinhit" command.
+Use "jptriggervars" without parameters to see the current values.
+e.g. wget -q -O- http://localhost:5050/test?msg=jptriggervars
+     gives output
+     inventory = 'Inventory'
+     egminfo1 =  'EgmInfo1'
+     egminfo2 =  'EgmInfo2'
+     jpname =    'jpName'
+     prizename = 'prizeName'
+     sitename =  'SiteName'
+     gamename =  'gamename'
+     manufacturer = 'manufacturer'
+     model =     'model'
+e.g. wget -q -O- http://localhost:5050/test?msg=jptriggervars_Inr_DieAndere_medium
+     sets only 3 vars (inventory, egminfo1 and egminfo2)
+
+
+OK - [edit] jptriggerdolocal 
+jptriggerdolocal[<boolean>]
+This command will cause a local or non-local jp hit when "jppretrigger" or "jptrigger_" command is called.
+Use "jptriggervars" without parameters to see the current values.
+e.g. wget -q -O- http://localhost:5050/test?msg=jptriggerdolocal
+     gives output
+     true/false
+e.g. wget -q -O- http://localhost:5050/test?msg=jptriggerdolocalfalse
+
+
+OK - [edit] jppretrigger 
+jppretrigger_<JpId>
+this command will trigger a fake Progressive Jackpot pre hit, the jp value is not known.
+JpId: Progressive identifier known by the smib.
+e.g. wget -q -O- http://localhost:5050/test?msg=jppretrigger_pl01
+
+
+OK - [edit] jpmultihit 
+jpmultihit
+this command will trigger a 'hit_jackpot_multiple' json message.
+(token PO will be used as mainWinner position)
+in order to test position (token PO) and site (token SI) has to be set. (leave jptriggerdolocal as true)
+example of HoneyBee.conf (only jackpot settings are stated)
+progressivetype = overhead	# only overhead (not for egm)
+
+jackpot = 0:HW01
+jackpot = 1:HW02
+jackpot = 2:HW03
+jackpot = 3:HW04
+ 
+jpgroup = 0:0,1,2,3
+jpgroup = 1:1,2,3
+jpgroup = 2:2,3
+jpgroup = 3:3
+e.g. This example will trigger group 1
+jptriggerdolocal has to be true (is default)
+wget -q -O- http://localhost:5050/test?msg=simsmibtokenPODRGT-001-001-001
+wget -q -O- http://localhost:5050/test?msg=simsmibtokenSINET1
+wget -q -O- http://localhost:5050/test?msg=jptrigger_HW02_4000_2_400
+wget -q -O- http://localhost:5050/test?msg=jptrigger_HW03_3000_2_300
+wget -q -O- http://localhost:5050/test?msg=jptrigger_HW04_1000_2_100
+wget -q -O- http://localhost:5050/test?msg=jpmultihit
+
+
+OK - [edit] jpvalueset 
+jpvalueset_<JpId>_<value>[_<participationValue>[_numParticipatingEgms]]
+This command sends fake jackpot updates messages. The original jackpot values are not updated anymore.
+To get original jackpot messges again jpvalueset has to be called without value and without participation value .
+JpId:               Progressive (4-char) identifier known by smib.
+value:              progressive update value
+participationValue: total participation value    (optional)
+numParticipatingEgms: number of participating egms  (optional)
+e.g. wget -q -O- http://localhost:5050/test?msg=jpvalueset_QHP1_8000_2000_2  // update jp value and jp participant value with 2 participating emgs
+e.g. wget -q -O- http://localhost:5050/test?msg=jpvalueset_QHP1            // get original jp update messages.
+
+
+OK - [edit] jpvalueinc 
+jpvalueinc_<JpId>_<value>[_<participationValue>[_numParticipatingEgms]]
+Is like jpvalueset, increment value instead of set.
+e.g. wget -q -O- http://localhost:5050/test?msg=jpvalueinc_QHP1_8_2    // increment jp value and jp participant value (do not change num of participating egms)
+
+
+OK - [edit] jpcampaignstate 
+jackpot campaign are jackpots which are active for a x amount of time like happy hour progressive. After the active period there is also a period to show the results. 
+jpcampaignstate<the state>
+state can be not_running, jp_active, show_jplist
+e.g. wget -q -O- http://localhost:5050/test?msg=jpcampaignstatejp_active    // set jpcampaign to this state
+
+
+OK - [edit] setudptime 
+set udptime in HoneyBee and start the udptime clock, for testing purposes if HoneyBee do not receive udp jackpot messages. 
+setudptime<gmtTime>_timeoffset
+e.g. wget -q -O- http://localhost:5050/test?msg=setudptime1438086600_7200   // set udp time clock to Tue, 28 Jul 2015 12:30:00 GMT with +02 hours offset
+
+
+OK - [edit] bigwinhit 
+command to test bigwin hit. if current screen is egm the screen will switch to bigwin screen. Be aware the screen will not switch when HoneyBee is not idle (credits/cardin) 
+bigwinhit[<amount>]                                              // use jptriggervars to change other fields.
+e.g. wget -q -O- http://localhost:5050/test?msg=bigwinhit25000 // trigger a bigwin with win of 250 euro.
+
+
+OK - [edit] featurebegin 
+command to test the feature, screen will be switched to feature screen and internal state to feature state, call featureend to force the end. The prize amount can be given in credits or cents (for simulate featurehit prizeInCredits and prizeInCents will have this value) 
+featurebegin<prize in credits/cents>[_<recovery state>]
+e.g. wget -q -O- http://localhost:5050/test?msg=featurebegin1000_inited // set to feature state in recovery point 'inited' with prize outcome of 1000 credits
+
+wheeloffortune states are: inited, waitstart, wheelspinning, showprize
+
+
+OK - [edit] featureend 
+command to force feature end, call this if BumbleBee didn't sent the ScreenStateFinished command, internal state will be set from feature to egm. 
+featureend
+e.g. wget -q -O- http://localhost:5050/test?msg=featureend
+
+
+OK - [edit] screento 
+screento<screenid>
+this command forces a screen switch
+screenid can be egm, drscreen, systeminfo, progressive, advertisement, virtualglass
+e.g. wget -q -O- http://localhost:5050/test?msg=screentoegm
+
+
+OK - [edit] screenbackfrom 
+screenbackfrom<screenid>
+this command notifies that screenmode has finised, HoneyBee decides what to do next depending on state+screen.
+screenid can be egm, drscreen, systeminfo, progressive, advertisement, virtualglass, bigwin
+
+e.g. 
+wget -q -O- http://localhost:5050/test?msg=screentobigwin
+sleep 10
+wget -q -O- http://localhost:5050/test?msg=screenbackfrombigwin
+
+
+OK - [edit] debug, verbose, normal 
+Set logger level, normal means set logger to HoneyBee's startup configuration
+debug
+verbose
+normal
+e.g. wget -q -O- http://localhost:5050/test?msg=debug
+
+
+OK - [edit] logjsonas 
+Log all JSon messages as info or debug(=default)
+logjsonas<debug/info>
+e.g. wget -q -O- http://localhost:5050/test?msg=logjsonasinfo
+
+
+OK - [edit] logsmibas 
+Log all smib tokens as info or debug(=default)
+logsmibas<debug/info>
+e.g. wget -q -O- http://localhost:5050/test?msg=logsmibasinfo
+
+
+OK - [edit] restart 
+Restart honeyBee and BumbleBee 
+restart<param>
+this command calls restartBee.sh script. How and when the script is called depends on given param.
+<none>    ; see idle
+idle      ; restartBee.sh will be called when HoneyBee is idle (player left)
+idleforce ; restartBee.sh with option --force will be called when HoneyBee is idle (player left)
+immediate ; restartBee.sh will be called immediately.
+force     ; restartBee.sh will be called immediately with option --force.
+e.g. wget -q -O- http://localhost:5050/test?msg=restartimmediate
+
+HoneyBee calls ./restartBee.sh with a system call.
+When the script kills HoneyBee the script keeps on running. (Has been tested)
+
+
+OK - [edit] refresh 
+Under construction 
+Restart BumbleBee without effecting HoneyBee 
+refresh<param>
+this command restarts BumbleBee by means of a restart of the browser of a page reload in the browser
+<none>    ; see idle
+idle      ; Do a page-reload when idle
+force     ; see idleforce
+idleforce ; Restart the browser when idle
+immediate ; Do a page-reload immediately
+immediateforce ; Restart the browser immediately
+
+
+OK - [edit] getstate 
+getstate
+this command obtains the states of HoneyBee.
+e.g. wget -q -O- http://localhost:5050/test?msg=getstate
+     return will be:
+     version:2.8
+     smibversion:3.10.20
+     smibconnectionstate:connected
+     sadconnectionstate:connected
+     isidle:true
+     screenmode:egm
+
+
+[edit] querywincurrmonth 
+querywincurrmonth
+this command let HoneyBee do the sql request "query total wins period in the current month"
+e.g. wget -q -O- http://localhost:5050/test?msg=querywincurrmonth
+
+
+[edit] querywinlastmonth 
+querywinlastmonth
+this command let HoneyBee do the sql request "query total wins period in the last month"
+e.g. wget -q -O- http://localhost:5050/test?msg=querywinlastmonth
+
+
+OK - [edit] bboxclearerror 
+this command resets the blackbox errors, and remove the invalid (wrong md5sum) video files
+e.g. wget -q -O- http://localhost:5050/test?msg=bboxclearerror
+
+
+OK - [edit] dumptoken 
+dumptoken<command>
+This command dumps the current token values from HoneyBee's token(keyvalue) database.
+Command can be
+all                           : dump whole database
+<XX> (2-char token)           : dump the whole token (all indexes in case of array)
+<XX>_<array index>            : dump only given index of the token (for non arrays 'index = 0' is possible)
+<XX>_<array index>_<field nr> : dump only one value of given token with array
+c<1,2>X[_<array index>_<field nr>] : same as above but now with custom tokens.
+                                     c2B gives:
+                                     '\2'Bx86_atom;none        first cycle
+
+e.g. wget -q -O- http://localhost:5050/test?msg=dumptokenTM
+     gives output
+     TM1379613548;7200;1;1                                        2013-09-19T17:59:07
+
+dumptokenname
+Gives a list of all defined custom tokens
+
+
+OK - [edit] simsmibtoken 
+simulate a smib token, for test purposes, to do a test without having a smib. 
+simsmibtoken<smib token + smib params>
+
+e.g. wget -q -O- http://localhost:5050/test?msg=simsmibtoken"TM1408372193;7200;1;1"
+Operations: 
+token "@<operant>" is a code to perform mathematical and bitwise operations.
+notiation of "@" in internet browser is "%40"
+@<Operation>_<key>_<applyValue>
+@<Operation>_<key>_<fieldNr>_<applyValue>
+@<Operation>_<key>_<indexArray>_<fieldNr>_<applyValue>
+Operation can be
+Set  - set value
+Add  - Add value
+Sub  - substract value
+Or   - Or bit
+And  - And bit
+Clr  - Clear bit
+
+e.g. wget -q -O- http://localhost:5050/test?msg=simsmibtoken"%40Add_TM_1"
+e.g. wget -q -O- http://localhost:5050/test?msg=simsmibtoken"%40Set_TM_0x1234"
+e.g. wget -q -O- http://localhost:5050/test?msg=simsmibtoken"%40Set_TM_1_3600"
+e.g. wget -q -O- http://localhost:5050/test?msg=simsmibtoken"%40Or_%03A_1_1_0x20"
+
+Obsolete, use @<operation> 
+
+Operations:
+token "#2" is a code to perform mathematical and bitwise operations.
+notiation of "#2" in internet browser is %232
+use token "#1" to set index and field
+"#2<token><operand><value>"
+
+* Set        e.g. wget ...simsmibtoken"#2_ESSet11"     Set token ES to 11  (same as ES11)
+* Add        e.g. wget ...simsmibtoken"#2_ESAdd10"     Add 10 to value of token ES
+* Sub        e.g. wget ...simsmibtoken"#2_ESSub1"      Subtract 1 of value of token ES
+* Orr (=Or)  e.g. wget ...simsmibtoken"#2_ESOrr0x20"   Set 6th bit of value of token ES, (value given as hexadecimal)
+* Orr (=Or)  e.g. wget ...simsmibtoken"#2_ESOrr32"     Set 6th bit of value of token ES, (value given as decimal)
+* Clr        e.g. wget ...simsmibtoken"#2_ESClr0x10"   Clear 5th bit of value of token ES
+                  wget ...simsmibtoken"%232_ESClr0x10"
+
+token "#1" set index and field which will be applied in "#2".
+notiation of "#1" in internet browser is %231
+field and index will be set to 0 again after executing "#2"
+"#1_<index>_<field>"
+e.g. "#1_1_2"
+e.g. wget -q -O- http://localhost:5050/test?msg=simsmibtoken"%231_1_2"
+
+
+OK - [edit] setmastervolume 
+setmastervolume<volume>
+This command sets the master volume as value in the HoneyBee's database, and triggers notification message "mastervolume"
+params
+volume (double)
+
+e.g. wget -q -O- http://localhost:5050/test?msg=setmastervolume0.5
+
+
+OK - [edit] setactivestream 
+setactivestream<name>_<id>
+This command sets the active stream as values in the HoneyBee's database, and triggers notification message "activestream"
+Parameters
+name (string): name of active stream
+id (int)     : id of active stream
+
+e.g. wget -q -O- http://localhost:5050/test?msg=setactivestream10.129.100.1_2

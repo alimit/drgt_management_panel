@@ -1,0 +1,76 @@
+<div ng-controller="TokenCtrl">
+	<div class="bg-light lter b-b wrapper-md">
+		<h1 class="m-n font-thin h3">
+			<i class="fa fa-magic icon i-sm m-r-sm"></i>
+			<span >Tokens - dumptoken</span>
+			<!--<button type="submit" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right" ng-disabled="settingsFrom.$invalid">Save</button>-->
+		</h1>
+	</div>
+	<alert ng-repeat="alert in alerts" class="fade-in" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+	<div class="wrapper-md">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold">Dump Token</div>
+					<div class="panel-body">
+						<div class="bs-example form-horizontal">
+							<div class="col-lg-9">
+								<div class="form-group">
+									<label class="col-lg-2 control-label">type</label>
+									<div class="col-lg-5">
+										<ui-select ng-model="token.dumptoken.type" theme="bootstrap" required>
+											<ui-select-match placeholder="Select or search an action from the list...">{{$select.selected.name}}</ui-select-match>
+											<ui-select-choices repeat="type in token.typeOptions | filter: $select.search.name">
+												<div ng-bind-html="type.name | highlight: $select.search.name"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+								</div>
+								<div class="form-group" ng-repeat="field in token.tokenFields" ng-if="field.group == token.dumptoken.type.group">
+									<label class="col-lg-2 control-label">{{field.name}}</label>
+									<div class="col-lg-5">
+										<input type="text" ng-model="token.dumptoken.data[field.model]" value="field.value" class="form-control" placeholder="">
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<button type="button" ng-click="submitData('dumptoken')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold">Result</div>
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-striped b-t b-light">
+								<tbody>
+									<tr ng-show="started && !loaded">
+										<td>
+											<div id="loader" style="position:relative">
+												<div class="sk-wave">
+													<div class="sk-rect sk-rect1"></div>
+													<div class="sk-rect sk-rect2"></div>
+													<div class="sk-rect sk-rect3"></div>
+													<div class="sk-rect sk-rect4"></div>
+													<div class="sk-rect sk-rect5"></div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr ng-repeat="token in token.dumptoken.result" ng-cloak ng-show="loaded">
+										<td>{{token}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,45 @@
+<div ng-controller="TokenCtrl">
+	<div class="bg-light lter b-b wrapper-md">
+		<h1 class="m-n font-thin h3">
+			<i class="fa fa-magic icon i-sm m-r-sm"></i>
+			<span >Tokens - simsmibtoken</span>
+			<!--<button type="submit" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right" ng-disabled="settingsFrom.$invalid">Save</button>-->
+		</h1>
+	</div>
+	<alert ng-repeat="alert in alerts" class="fade-in" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+	<div class="wrapper-md">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold">Sim SMIB Token</div>
+					<div class="panel-body">
+						<div class="bs-example form-horizontal">
+							<div class="col-lg-9">
+								<div class="form-group">
+									<label class="col-lg-2 control-label">Operation</label>
+									<div class="col-lg-5">
+										<ui-select ng-model="token.simsmibtoken.operation" theme="bootstrap">
+											<ui-select-match placeholder="Select operation type">{{$select.selected}}</ui-select-match>
+											<ui-select-choices repeat="operation in token.operationOptions | filter: $select.search">
+												<div ng-bind-html="operation | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+								</div>
+								<div class="form-group" ng-repeat="operation in token.operationFields">
+									<label class="col-lg-2 control-label">{{operation}}</label>
+									<div class="col-lg-5">
+										<input type="text" ng-model="token.simsmibtoken.data[operation]" class="form-control" placeholder="">
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<button type="button" ng-click="submitData('simsmibtoken')" class="btn m-b-xs w-xs m-r-sm btn-primary pull-right">Send</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

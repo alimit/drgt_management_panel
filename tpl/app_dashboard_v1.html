@@ -1,0 +1,37 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+	<!-- main -->
+	<div class="col">
+		<!-- main header -->
+		<div class="bg-light lter b-b wrapper-md">
+			<div class="row">
+				<div class="col-sm-6 col-xs-12">
+					<h1 class="m-n font-thin h3 text-black">Dashboard</h1>
+					<small class="text-muted">Honeybee management console</small>
+				</div>
+			</div>
+		</div>
+		<!-- / main header -->
+		<div class="wrapper-md" ng-controller="DashboardCtrl">
+			<!-- data -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel no-border">
+						<div class="panel no-border">
+							<div class="panel-heading wrapper b-b b-light">
+								<h4 class="font-thin m-t-none m-b-none text-muted">GetState</h4>              
+							</div>
+							<ul class="list-group list-group-lg m-b-none">
+								<li class="list-group-item" ng-repeat="state in getstate">
+									{{state}}
+								</li>
+							</ul>
+						<div class="panel-footer">
+							<button class="btn btn-primary btn-addon btn-sm" ng-click="refreshgetstate()">Refresh</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- / main -->
+</div>
